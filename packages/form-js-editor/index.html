@@ -1,0 +1,73 @@
+<html>
+<head>
+    <!--
+      required editor styles
+    -->
+    <link rel="stylesheet" href="../form-js/dist/assets/form-js.css">
+    <link rel="stylesheet" href="../form-js/dist/assets/form-js-editor.css">
+    <link rel="stylesheet" href="../form-js/dist/assets/properties-panel.css">
+    <link rel="stylesheet" href="../form-js/dist/assets/dragula.css">
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        #form {
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div id="form"></div>
+<button id="export">Export</button>
+<!--
+  add your form schema to this script tag
+  alternatively, load it asynchronously from anywhere
+-->
+<script type="application/form-schema">
+{
+  "schemaVersion": 1,
+  "exporter": {
+    "name": "form-js",
+    "version": "0.1.0"
+  },
+  "components": [],
+  "type": "default"
+}
+    </script>
+
+<!--
+  required editor script
+-->
+<script src="../form-js/dist/form-editor.umd.js"></script>
+
+<script>
+    const schema = JSON.parse(
+        document.querySelector('[type="application/form-schema"]').textContent
+    );
+
+    const container = document.querySelector('#form');
+
+    a = async () => {
+        const editor = await FormEditor.createFormEditor({
+            container,
+            schema
+        })
+
+        document.getElementById('export').addEventListener('click', () => {
+            const out = editor.saveSchema()
+            console.log(out);
+            console.log(JSON.stringify(out));
+        })
+    }
+    a()
+
+</script>
+
+
+</body>
+</html>
